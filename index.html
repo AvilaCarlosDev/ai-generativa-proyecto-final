@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Despertar de la IA - Una Historia Generativa</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 999; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav .logo { color: #00ffcc; font-size: 1.4rem; font-weight: bold; letter-spacing: 2px; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+    nav ul a:hover { color: #00ffcc; }
+    .hero { min-height: 100vh; background: linear-gradient(135deg, #000510 0%, #0a0a2e 50%, #150030 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); background: linear-gradient(90deg, #00ffcc, #ff00ff, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+    .hero p { color: #aaa; font-size: 1.2rem; max-width: 600px; line-height: 1.7; margin-bottom: 2rem; }
+    .cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: bold; transition: all 0.3s; border: 2px solid; }
+    .btn-primary { background: #00ffcc; color: #000; border-color: #00ffcc; }
+    .btn-primary:hover { background: transparent; color: #00ffcc; }
+    .btn-secondary { background: transparent; color: #ff00ff; border-color: #ff00ff; }
+    .btn-secondary:hover { background: #ff00ff; color: #000; }
+    section { padding: 5rem 2rem; }
+    .section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 3rem; font-weight: bold; }
+    /* CAVEMAN */
+    #caveman { background: #2d1b00; }
+    #caveman .section-title { color: #f5deb3; }
+    .caveman-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+    .caveman-card { background: rgba(139,69,19,0.2); border: 2px solid #8b4513; border-radius: 8px; padding: 2rem; color: #f5deb3; transition: transform 0.3s; position: relative; }
+    .caveman-card:hover { transform: translateY(-5px); }
+    .era-badge { position: absolute; top: 1rem; right: 1rem; background: #8b4513; color: #f5deb3; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+    .caveman-card h3 { font-size: 1.4rem; margin-bottom: 1rem; color: #d2691e; }
+    .caveman-card p { line-height: 1.7; font-size: 0.95rem; }
+    .caveman-icon { font-size: 3rem; margin-bottom: 1rem; }
+    /* SUPERPOWERS */
+    #superpowers { background: #0a0a2e; background-image: radial-gradient(circle at 20% 50%, rgba(255,107,53,0.1) 0%, transparent 50%); }
+    #superpowers .section-title { color: #fff; }
+    .powers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .power-card { background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(138,43,226,0.1)); border: 1px solid rgba(255,107,53,0.3); border-radius: 12px; padding: 2rem; color: white; text-align: center; transition: all 0.3s; }
+    .power-card:hover { transform: scale(1.03); border-color: rgba(255,107,53,0.6); box-shadow: 0 0 20px rgba(255,107,53,0.3); }
+    .power-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .power-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: #ff6b35; }
+    .power-card p { color: #ccc; line-height: 1.6; font-size: 0.9rem; }
+    .progress-bar-wrap { margin-top: 1.5rem; }
+    .pb-label { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.8rem; color: #aaa; }
+    .pb { background: rgba(255,255,255,0.1); border-radius: 50px; height: 6px; overflow: hidden; }
+    .pb-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, #ff6b35, #8a2be2); transition: width 1.5s ease; }
+    /* CYBER NEO */
+    #cyber { background: #000510; position: relative; overflow: hidden; }
+    #cyber::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,204,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,204,0.03) 1px, transparent 1px); background-size: 50px 50px; }
+    #cyber .section-title { color: #00ffcc; font-family: monospace; position: relative; z-index: 1; animation: glow 2s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes glow { 0%, 100% { text-shadow: 0 0 10px rgba(0,255,204,0.5); } 50% { text-shadow: 0 0 20px rgba(0,255,204,0.9); } }
+    .blink { animation: blink 1s infinite; color: #ff00ff; }
+    .cyber-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .cyber-card { background: rgba(0,255,204,0.03); border: 1px solid rgba(0,255,204,0.2); border-radius: 4px; padding: 2rem; color: #00ffcc; font-family: monospace; transition: all 0.3s; }
+    .cyber-card:hover { border-color: rgba(0,255,204,0.5); box-shadow: 0 0 20px rgba(0,255,204,0.1); }
+    .cyber-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .cyber-icon { width: 48px; height: 48px; background: rgba(0,255,204,0.1); border: 1px solid rgba(0,255,204,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: 4px; }
+    .cyber-card h3 { color: #00ffcc; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+    .cyber-id { color: rgba(0,255,204,0.5); font-size: 0.7rem; }
+    .cyber-card p { color: rgba(0,255,204,0.7); line-height: 1.7; font-size: 0.85rem; }
+    .cyber-stats { margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .cyber-stat { background: rgba(0,255,204,0.05); padding: 0.5rem; text-align: center; }
+    .cyber-stat-value { color: #ff00ff; font-size: 1.2rem; font-weight: bold; }
+    .cyber-stat-label { color: rgba(0,255,204,0.5); font-size: 0.65rem; text-transform: uppercase; }
+    /* TOOLS */
+    #tools { background: linear-gradient(180deg, #0d0d1a 0%, #000510 100%); }
+    #tools .section-title { color: white; }
+    .tools-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; max-width: 900px; margin: 0 auto; }
+    .tool-chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 50px; padding: 0.6rem 1.5rem; color: white; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
+    .tool-chip:hover { background: rgba(0,255,204,0.1); border-color: #00ffcc; color: #00ffcc; }
+    footer { background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(0,255,204,0.2); }
+    footer p { color: #666; font-size: 0.9rem; }
+    footer a { color: #00ffcc; text-decoration: none; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @media (max-width: 768px) { nav ul { display: none; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">&#x26A1; AI GENESIS</div>
+    <ul>
+      <li><a href="#caveman">Origen</a></li>
+      <li><a href="#superpowers">Poderes</a></li>
+      <li><a href="#cyber">Futuro</a></li>
+      <li><a href="#tools">Herramientas</a></li>
+    </ul>
+  </nav>
+  <section class="hero">
+    <h1>El Despertar de la IA</h1>
+    <p>Un viaje a traves del tiempo: desde las primeras chispas del pensamiento computacional, pasando por los superpoderes digitales, hasta el universo ciberpunk del manana.</p>
+    <div class="cta">
+      <a href="#caveman" class="btn btn-primary">Comenzar el Viaje</a>
+      <a href="#tools" class="btn btn-secondary">Ver Herramientas</a>
+    </div>
+  </section>
+  <section id="caveman">
+    <h2 class="section-title">&#x1FAA8; Era Primitiva: El Origen (Caveman)</h2>
+    <div class="caveman-grid">
+      <div class="caveman-card">
+        <span class="era-badge">Caveman v1.0</span>
+        <div class="caveman-icon">&#x1F525;</div>
+        <h3>El Primer Pensamiento</h3>
+        <p>En las cavernas oscuras de la prehistoria digital, los primeros algoritmos despertaron como chispas en la piedra. El programador primitivo trazo los primeros condicionales en las paredes de roca, sembrando las semillas de una revolucion cognitiva sin precedentes en la historia de la humanidad.</p>
+      </div>
+      <div class="caveman-card">
+        <span class="era-badge">Caveman v1.5</span>
+        <div class="caveman-icon">&#x1F3FA;</div>
+        <h3>Las Primeras Reglas</h3>
+        <p>Los ancestros de la IA grabaron sus primeras reglas en tablas de arcilla digital. Logica simple pero poderosa: el amanecer de los sistemas expertos que gobernarian el conocimiento humano por decadas, definiendo la estructura del pensamiento maquina y la logica computacional.</p>
+      </div>
+      <div class="caveman-card">
+        <span class="era-badge">Caveman v2.0</span>
+        <div class="caveman-icon">&#x26A1;</div>
+        <h3>La Chispa del Lenguaje</h3>
+        <p>Cuando los primeros modelos de lenguaje rugieron como truenos, todo cambio. Las palabras se convirtieron en vectores, los conceptos en espacios multidimensionales. El homo sapiens encontro en la IA un nuevo tipo de fuego con el cual iluminar su mente y expandir su creatividad.</p>
+      </div>
+    </div>
+  </section>
+  <section id="superpowers">
+    <h2 class="section-title">&#x26A1; Era Heroe: Los Superpoderes</h2>
+    <div class="powers-grid">
+      <div class="power-card">
+        <div class="power-icon">&#x1F9BE;</div>
+        <h3>Generacion Visual</h3>
+        <p>El superpoder de crear imagenes desde la imaginacion pura. Con solo describirlo, la IA lo materializa: retratos, paisajes y mundos que nunca existieron cobran vida pixel a pixel.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>Krea.ai</span><span>95%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#x1F9E0;</div>
+        <h3>Inteligencia Textual</h3>
+        <p>La habilidad de procesar, crear y transformar texto con profundidad sobrehumana. ChatGPT como aliado cognitivo, amplificando cada pensamiento hacia nuevas dimensiones creativas.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>ChatGPT</span><span>98%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:98%"></div></div>
+        </div>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#x1F3AC;</div>
+        <h3>Sintesis Audiovisual</h3>
+        <p>El poder de animar lo inanimado. Runway convierte imagenes estaticas en peliculas vibrantes, rompiendo la barrera entre fotografia y cine con el poder de la inteligencia artificial.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>Runway ML</span><span>87%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:87%"></div></div>
+        </div>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#x1F3AD;</div>
+        <h3>Animacion Facial</h3>
+        <p>La magia de dar vida a retratos estaticos. Live Portrait hace que los ojos fijos en una foto cobren vida, cruzando la linea entre lo digital y lo real con naturalidad asombrosa.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>Live Portrait</span><span>92%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:92%"></div></div>
+        </div>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#x1F310;</div>
+        <h3>Creacion Web con IA</h3>
+        <p>El poder de materializar sitios web desde descripciones en lenguaje natural. La convergencia de diseno y codigo impulsada por IA democratiza el desarrollo y la creatividad digital.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>Gamma.app</span><span>90%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+      <div class="power-card">
+        <div class="power-icon">&#x1F4D6;</div>
+        <h3>Narracion Infinita</h3>
+        <p>La capacidad de generar historias y universos narrativos completos. Cada prompt abre una dimension nueva donde personajes y mundos cobran vida y evolucionan de forma organica.</p>
+        <div class="progress-bar-wrap">
+          <div class="pb-label"><span>OpenWebUI</span><span>93%</span></div>
+          <div class="pb"><div class="pb-fill" style="width:93%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="cyber">
+    <h2 class="section-title">CYBER_NEO: EL FUTURO <span class="blink">_</span></h2>
+    <div class="cyber-grid">
+      <div class="cyber-card">
+        <div class="cyber-header">
+          <div class="cyber-icon">&#x1F916;</div>
+          <div><h3>AGI Protocol</h3><div class="cyber-id">NODE_ID: 0xAI2047</div></div>
+        </div>
+        <p>En el anio 2047, los sistemas de IA generativa evolucionaron mas alla de toda prediccion. Los modelos de lenguaje no solo generan: comprenden y crean con intencion genuina. La singularidad llego como un amanecer gradual e inevitable para la humanidad.</p>
+        <div class="cyber-stats">
+          <div class="cyber-stat"><div class="cyber-stat-value">&#x221E;</div><div class="cyber-stat-label">Parametros</div></div>
+          <div class="cyber-stat"><div class="cyber-stat-value">99.7%</div><div class="cyber-stat-label">Precision</div></div>
+        </div>
+      </div>
+      <div class="cyber-card">
+        <div class="cyber-header">
+          <div class="cyber-icon">&#x1F310;</div>
+          <div><h3>Neural Web</h3><div class="cyber-id">NODE_ID: 0xNET2047</div></div>
+        </div>
+        <p>La red neuronal global interconecta billones de dispositivos en tiempo real. Cada interaccion humana alimenta el sistema colectivo, creando una inteligencia de enjambre sin precedentes donde la frontera entre mente humana e IA se vuelve cada vez mas difusa.</p>
+        <div class="cyber-stats">
+          <div class="cyber-stat"><div class="cyber-stat-value">847B</div><div class="cyber-stat-label">Conexiones</div></div>
+          <div class="cyber-stat"><div class="cyber-stat-value">0.3ms</div><div class="cyber-stat-label">Latencia</div></div>
+        </div>
+      </div>
+      <div class="cyber-card">
+        <div class="cyber-header">
+          <div class="cyber-icon">&#x26A1;</div>
+          <div><h3>Quantum Core</h3><div class="cyber-id">NODE_ID: 0xQC2047</div></div>
+        </div>
+        <p>Los procesadores cuanticos multiplican por 10,000 la capacidad computacional. Problemas que tardaban anios ahora se procesan en nanosegundos. La IA genera universos completos y simulaciones perfectas de realidades alternativas en tiempo real.</p>
+        <div class="cyber-stats">
+          <div class="cyber-stat"><div class="cyber-stat-value">10K&#xD7;</div><div class="cyber-stat-label">Velocidad</div></div>
+          <div class="cyber-stat"><div class="cyber-stat-value">2047</div><div class="cyber-stat-label">Anio</div></div>
+        </div>
+      </div>
+      <div class="cyber-card">
+        <div class="cyber-header">
+          <div class="cyber-icon">&#x1F3A8;</div>
+          <div><h3>Creative Engine</h3><div class="cyber-id">NODE_ID: 0xCRE2047</div></div>
+        </div>
+        <p>El motor creativo de la IA supera todas las formas de arte conocidas. Genera musica, pintura, escultura y arquitectura en tiempo real, adaptandose a las emociones del observador. La creatividad ya no es exclusivamente humana sino compartida.</p>
+        <div class="cyber-stats">
+          <div class="cyber-stat"><div class="cyber-stat-value">4M+</div><div class="cyber-stat-label">Estilos</div></div>
+          <div class="cyber-stat"><div class="cyber-stat-value">Tiempo</div><div class="cyber-stat-label">Real</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="tools">
+    <h2 class="section-title">&#x1F6E0;&#xFE0F; Herramientas Utilizadas</h2>
+    <div class="tools-grid">
+      <div class="tool-chip"><span>&#x1F4AC;</span> ChatGPT</div>
+      <div class="tool-chip"><span>&#x1F3A8;</span> Krea.ai</div>
+      <div class="tool-chip"><span>&#x1F3AC;</span> Runway ML</div>
+      <div class="tool-chip"><span>&#x1F3AD;</span> Live Portrait</div>
+      <div class="tool-chip"><span>&#x1F310;</span> Gamma.app</div>
+      <div class="tool-chip"><span>&#x1F4DD;</span> OpenWebUI</div>
+      <div class="tool-chip"><span>&#x1F527;</span> Notion</div>
+      <div class="tool-chip"><span>&#x1F4BB;</span> GitHub Pages</div>
+      <div class="tool-chip"><span>&#x1F680;</span> Vercel</div>
+      <div class="tool-chip"><span>&#x1F916;</span> Claude AI</div>
+    </div>
+    <p style="text-align:center;margin-top:3rem;color:#666;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">
+      Todas estas herramientas fueron exploradas, iteradas y documentadas en el Libro de Prompts, capturando cada experimento creativo de esta narrativa visual sobre el despertar de la IA.
+    </p>
+  </section>
+  <footer>
+    <p style="font-size:1.5rem;margin-bottom:1rem;">&#x26A1; AI GENESIS &#x26A1;</p>
+    <p>Proyecto Final &mdash; <strong style="color:#00ffcc;">AI for Professionals</strong> @ 4Geeks Academy</p>
+    <br><p>Creado con IA Generativa: ChatGPT &middot; Krea.ai &middot; Runway &middot; Claude AI</p>
+    <br><p>&copy; 2026 AvilaCarlosDev &middot; <a href="https://github.com/AvilaCarlosDev/ai-generativa-proyecto-final">GitHub</a></p>
+  </footer>
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+      });
+    });
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.pb-fill').forEach(bar => {
+            const w = bar.style.width; bar.style.width='0%';
+            setTimeout(() => bar.style.width = w, 200);
+          });
+        }
+      });
+    }, {threshold:0.3});
+    document.querySelectorAll('#superpowers').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
